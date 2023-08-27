@@ -10,7 +10,7 @@ export function Filters () {
   const categoryFilterId = useId()
 
   const handleChangeMinPrice = (event) => {
-    let newvalue = event.target.value
+    let newvalue = filters.maxPrice < event.target.value ? filters.maxPrice : event.target.value
     setFilters(prevState => ({
       ...prevState,
       minPrice: newvalue
@@ -18,9 +18,10 @@ export function Filters () {
   }
 
   const handleChangeMaxPrice = (event) => {
+    let newvalue = filters.minPrice > event.target.value ? filters.minPrice : event.target.value
     setFilters(prevState => ({
       ...prevState,
-      maxPrice: event.target.value
+      maxPrice: newvalue
     }))
   }
 
@@ -39,9 +40,6 @@ export function Filters () {
         <input
           type='number'
           id={minPriceFilterId}
-          placeholder='min'
-          min='0'
-          max='1000'
           onChange={handleChangeMinPrice}
           value={filters.minPrice}
         />
@@ -51,9 +49,6 @@ export function Filters () {
         <input
           type='number'
           id={maxPriceFilterId}
-          placeholder='max'
-          min={filters.minPrice}
-          max='1000'
           onChange={handleChangeMaxPrice}
           value={filters.maxPrice}
         />
